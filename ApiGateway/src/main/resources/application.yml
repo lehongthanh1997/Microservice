@@ -1,0 +1,27 @@
+server:
+  port: 9000
+
+Spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: book
+          uri: http://localhost:8080
+          predicates:
+            - Path=/api/v1/book/**
+        - id: order
+          uri: http://localhost:8082
+          predicates:
+            -  Path=/api/v1/order/**
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+          corsConfigurations:
+            '[/**]':
+              allowedOrigins: "*"
+              allowedMethods: "*"
+              allowedHeaders: "*"
+
+
